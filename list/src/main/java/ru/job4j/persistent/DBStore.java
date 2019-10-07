@@ -4,15 +4,15 @@ import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import ru.job4j.models.Item;
 
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Class DBStore does a lot of actions via Hibernate.
  *
  * @author Evgeny Shpytev (mailto:eshpytev@mail.ru).
- * @version 1.
+ * @version 2.
  * @since 05.10.2019.
  */
 public class DBStore implements Store {
@@ -32,76 +32,62 @@ public class DBStore implements Store {
 
     @Override
     public void add(Item item) {
-        Session session = this.factory.openSession();
-        try {
-            session.beginTransaction();
+        this.tx(session -> {
             session.save(item);
-            session.getTransaction().commit();
-        } catch (TransactionException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-            this.factory.close();
-        }
+            return null;
+        });
     }
 
     @Override
     public void createOrUpdate(Item item) throws SessionException {
-        Session session = this.factory.openSession();
-        try {
-            session.beginTransaction();
+        this.tx(session -> {
             session.saveOrUpdate(item);
-            session.getTransaction().commit();
-        } catch (TransactionException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
+            return null;
+        });
     }
 
     @Override
     public void update(Item item) {
-        Session session = this.factory.openSession();
-        try {
-            session.beginTransaction();
-            session.update(item);
-            session.getTransaction().commit();
-        } catch (TransactionException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
+        this.tx(session -> {
+            session.save(item);
+            return null;
+        });
     }
 
     @Override
     public void delete(Item item) {
-        Session session = this.factory.openSession();
-        try {
-            session.beginTransaction();
+        this.tx(session -> {
             session.delete(item);
-            session.getTransaction().commit();
-        } catch (TransactionException e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
+            return null;
+        });
     }
 
     @Override
     public Map<Integer, Item> getAll() {
-        Map<Integer, Item> itemsMap = new TreeMap<>();
-        Session session = this.factory.openSession();
+        return (Map<Integer, Item>) this.tx(session -> session.createQuery("from Item").list()
+                .stream()
+                .collect(Collectors.toMap(Item::getId, x -> x))
+        );
+    }
+
+    /**
+     * This method wraps repetitive actions and removes duplicating of code.
+     * @param command - function that accepts one argument and produces a result.
+     * @param <T> - type of return object.
+     * @return - result of actions.
+     */
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = this.factory.openSession();
+        final Transaction transaction = session.beginTransaction();
         try {
-            session.beginTransaction();
-            for (Item item : (List<Item>) session.createQuery("from Item").list()) {
-                itemsMap.put(item.getId(), item);
-            }
-            session.getTransaction().commit();
-        } catch (TransactionException e) {
+            T result = command.apply(session);
+            transaction.commit();
+            return result;
+        } catch (Exception e) {
             session.getTransaction().rollback();
+            throw e;
         } finally {
             session.close();
         }
-        return itemsMap;
     }
 }
