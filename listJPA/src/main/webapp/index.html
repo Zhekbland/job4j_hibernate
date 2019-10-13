@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tasks</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Roboto', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+    <script>
+
+        /**
+         * ajax for create task and put into BD
+         */
+        function createTask() {
+            if (validate()) {
+                $.ajax({
+                    url : "http://localhost:8080/todolist/cou",
+                    method : "POST",
+                    dataType : "json",
+                    data : JSON.stringify({description : $(".form-control").val()}),
+                    complete : function () {
+                        $(".form-control").val("");
+                        updateTable();
+                    }
+                });
+            }
+        }
+
+        /**
+         * При создании задания проверяется проверяется форма на заполненность. Реализован вставка, обновление данных
+         *  с помощью метода saveOrUpdate и запрос всех данных из БД с помощью Hibernate. Вся остольная фильтрация
+         *  данных проискодит с помощью JavaScript. Если задание в таблице выполнено, ставим галку в столбце Done
+         *  (записывается дата на момент выполнения, если не стоит галка показывать всё, тогда задание скрывается).
+         *  Все данные из БД записываются в TreeMap для дальнейшей правильной сортировки и отображении в таблице(сайта)
+         *  при применении фильтров.
+         */
+        /**
+         * ajax for update table on page.html
+         */
+        function updateTable() {
+            $.ajax({
+                url : "http://localhost:8080/todolist/list",
+                method : "GET",
+                dataType : "text/json",
+                complete : function (data) {
+                    clearTable();
+                    let items = JSON.parse(data.responseText);
+                    let listCheckBox = !!$(".form-check-input:checked").val();
+                    console.log(listCheckBox);
+                    if (listCheckBox) {
+                        for (let item of items) {
+                            fillRowOfTable(item);
+                        }
+                    } else {
+                        for (let item of items) {
+                            if (!item.done) {
+                                fillRowOfTable(item);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * Fill table in our page and
+         * create dynamic checkbox
+         * for use our scripts.
+         */
+        function fillRowOfTable(item) {
+            $('tbody').append('<tr><th scope="row">' + item.id + '</th><td class="description' + item.id + '">'
+                + item.description + '</td><td>' + new Date(item.created).toLocaleString() + '</td><td>'
+                + '<input ' + createChecked(item.done)
+                +' type="checkbox" onchange="updateTask(' + item.id + ')" class="form-check-input'+ item.id
+                +'" value="true">' + '</td></tr>');
+        }
+
+        /**
+         * ajax for update task into BD.
+         */
+        function updateTask(id) {
+            let checkBox = !!$('.form-check-input' + id + ':checked').val();
+            let description = $('.description' + id).text();
+            console.log(checkBox);
+            console.log(description);
+            $.ajax({
+                url : "http://localhost:8080/todolist/cou",
+                method : "POST",
+                dataType : "json",
+                data : JSON.stringify({id : id, description : description, done : checkBox}),
+                complete : function () {
+                    updateTable();
+                }
+            });
+        }
+
+        function clearTable() {
+            $('tbody').empty();
+        }
+
+        /**
+         * we check checkBox checked or not.
+         */
+        function createChecked(itemDone) {
+            return itemDone ? "checked" : "";
+        }
+
+        /**
+         * validate textarea.
+         */
+        function validate() {
+            result = false;
+            if ($(".form-control").val() !== '') {
+                result = true;
+            } else {
+                alert("Write your task!");
+            }
+            return result;
+        }
+    </script>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center">
+            <label class="mx-auto my-auto">Write your task</label>
+        </div>
+        <div class="col-5 justify-content-center">
+            <div class="form-group mt-3">
+                <textarea class="form-control" rows="3" placeholder="Write text of your task"></textarea>
+            </div>
+        </div>
+        <div class="col-4 d-flex justify-content-center">
+            <div class="form-group mt-3">
+                <button type="button" class="btn btn-primary mt-2" onclick="return createTask()">Add task</button>
+                <div class="form-group form-check mt-3">
+                    <input type="checkbox" class="form-check-input" id="ShowCheck" onchange="updateTable()" value="true">
+                    <label class="form-check-task" for="ShowCheck">Show all tasks</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Task</th>
+            <th scope="col">Created</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+            <script>updateTable()</script>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
