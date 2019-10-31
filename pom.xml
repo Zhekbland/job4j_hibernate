@@ -12,7 +12,7 @@
         <module>list</module>
         <module>listJPA</module>
 <!--        <module>advertstock</module>-->
-<!--        <module>advertstockJPA</module>-->
+        <module>advertstockJPA</module>
         <module>userType</module>
     </modules>
 
