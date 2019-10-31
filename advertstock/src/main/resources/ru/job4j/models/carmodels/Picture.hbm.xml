@@ -1,0 +1,8 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.carmodels.Picture" table="pictures">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="image" column="image" type="byte[]" not-null="true"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.User" table="users">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" length="20" not-null="true"/>
+        <property name="surname" column="surname" length="20" not-null="true"/>
+        <property name="email" column="email" length="40" not-null="true" unique="true"/>
+        <property name="password" column="password" length="20" not-null="true" unique="true"/>
+        <property name="phone" column="phone" length="20" not-null="true" unique="true"/>
+        <map name="categories" inverse="true" cascade="all">
+            <key column="user_id" />
+            <map-key column="id" type="java.lang.Long"/>
+            <one-to-many class="ru.job4j.models.Car"/>
+        </map>
+    </class>
+</hibernate-mapping>

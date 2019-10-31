@@ -1,0 +1,32 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Car" table="cars">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="carMileage" column="carMileage" precision="6" scale="0"/>
+        <property name="year" column="year" precision="4"/>
+        <property name="price" column="price" precision="8" scale="0"/>
+        <property name="onSale" column="onSale" type="java.lang.Boolean"/>
+        <many-to-one name="user"
+                     column="user_id"
+                     class="ru.job4j.models.User"/>
+        <many-to-one name="carMake"
+                     column="carmake_id"
+                     class="ru.job4j.models.carmodels.CarMake"/>
+        <many-to-one name="model"
+                     column="model_id"
+                     class="ru.job4j.models.carmodels.Model"/>
+        <many-to-one name="bodyType"
+                     column="bodytype_id"
+                     class="ru.job4j.models.carmodels.BodyType"/>
+        <many-to-one name="engineType"
+                     column="enginetype_id"
+                     class="ru.job4j.models.carmodels.EngineType"/>
+        <many-to-one name="gearboxType"
+                     column="gearboxtype_id"
+                     class="ru.job4j.models.carmodels.GearboxType"/>
+        <many-to-one name="picture"
+                     column="picture_id"
+                     class="ru.job4j.models.carmodels.Picture"/>
+    </class>
+</hibernate-mapping>

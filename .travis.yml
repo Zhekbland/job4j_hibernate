@@ -22,3 +22,4 @@ before_install:
   - psql -c 'create database hibernate;' -U postgres
   - psql -c 'create database usertype;' -U postgres
   - psql -c 'create database advertstockjpa;' -U postgres
+  - psql -c 'create database advertstockxml;' -U postgres
