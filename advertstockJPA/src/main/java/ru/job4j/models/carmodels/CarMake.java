@@ -1,6 +1,10 @@
 package ru.job4j.models.carmodels;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "carmakes")
@@ -10,6 +14,9 @@ public class CarMake {
 
     @Column(length = 20, nullable = false, unique = true)
     private String name;
+
+    @OneToMany
+    private List<Model> model;
 
     public CarMake() {
 

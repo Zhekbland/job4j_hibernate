@@ -1,12 +1,16 @@
 package ru.job4j.persistence;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 import ru.job4j.models.User;
 
 import java.util.Map;
@@ -15,6 +19,7 @@ import java.util.stream.Collectors;
 
 public class UserDB implements IStock<User> {
 
+    private final static Logger LOG = LogManager.getLogger(UserDB.class.getName());
     private static final UserDB INSTANCE = new UserDB();
     private final SessionFactory sessionFactory;
 
@@ -47,23 +52,6 @@ public class UserDB implements IStock<User> {
         });
     }
 
-//    @Override
-//    public void update(User user) {
-//        final Session session = this.sessionFactory.openSession();
-//        final Transaction transaction = session.beginTransaction();
-//        try {
-////            User dbUser = session.get(User.class, user.getId());
-////            dbUser = user;
-//            session.update(user);
-//            transaction.commit();
-//        } catch (Exception e) {
-//            session.getTransaction().rollback();
-//            throw e;
-//        } finally {
-//            session.close();
-//        }
-//    }
-
     @Override
     public void delete(User user) {
         this.tx(session -> {
@@ -77,7 +65,21 @@ public class UserDB implements IStock<User> {
         return (Map<Integer, User>) this.tx(session -> session.createQuery("from User").list()
                 .stream()
                 .collect(Collectors.toMap(User::getId, user -> user)));
-//        return (List<User>) this.tx(session -> session.createQuery("from User ").list());
+    }
+
+    @Override
+    public User getById(int id) {
+        return this.tx(session -> session.get(User.class, id, LockMode.PESSIMISTIC_WRITE));
+    }
+
+    @Override
+    public User isCredentional(String email, String password) {
+        return this.tx(session -> {
+            Query query = session.createQuery("from User where email = :email and password = :password");
+            query.setParameter("email", email);
+            query.setParameter("password", password);
+            return (User) query.getSingleResult();
+        });
     }
 
     /**

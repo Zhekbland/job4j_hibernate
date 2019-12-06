@@ -1,5 +1,8 @@
 package ru.job4j.models.carmodels;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 
 @Entity

@@ -1,7 +1,6 @@
 package ru.job4j.models.carmodels;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
 @Table(name = "pictures")
@@ -11,18 +10,25 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Lob
+    @Column(nullable = false)
+    private String filePath;
+
+    @Column(nullable = false, unique = true)
+    private String fileName;
+
     private byte[] image;
 
     public Picture() {
     }
 
-    public Picture(int id) {
-        this.id = id;
+    public Picture(String filePath, String fileName, byte[] image) {
+        this.filePath = filePath;
+        this.fileName = fileName;
+        this.image = image;
     }
 
-    public Picture(byte[] image) {
-        this.image = image;
+    public Picture(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -31,6 +37,22 @@ public class Picture {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public byte[] getImage() {
@@ -43,7 +65,6 @@ public class Picture {
 
     @Override
     public String toString() {
-        return "Picture{" + "id=" + id + ", image=" + Arrays.toString(image)
-                + '}';
+        return "Picture{" + "id=" + id + ", filePath='" + filePath + '\'' + ", fileName='" + fileName + '\'' + '}';
     }
 }

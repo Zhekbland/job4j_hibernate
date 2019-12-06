@@ -9,11 +9,11 @@ import ru.job4j.models.carmodels.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class AdvertStockDBTest {
+public class AdvertCarDBTest {
 
     private final CarModelDB carModelDB = CarModelDB.getInstance();
     private final UserDB userDB = UserDB.getInstance();
-    private final AdvertStockDB advertStockDB = AdvertStockDB.getInstance();
+    private final AdvertCarDB advertCarDB = AdvertCarDB.getInstance();
 
     @Before
     public void init() {
@@ -29,8 +29,8 @@ public class AdvertStockDBTest {
         carModelDB.fillEngineType(new EngineType("Diesel"));
         carModelDB.fillGearBoxType(new GearboxType("Robot"));
         carModelDB.fillGearBoxType(new GearboxType("Automatic"));
-        carModelDB.fillPicture(new Picture(new byte[0]));
-        carModelDB.fillPicture(new Picture(new byte[0]));
+        carModelDB.fillPicture(new Picture("D:/", "pic1.jpg", new byte[]{0}));
+        carModelDB.fillPicture(new Picture("D:/", "pic2.jpg", new byte[]{0}));
     }
 
     @Test
@@ -48,12 +48,12 @@ public class AdvertStockDBTest {
         car.setEngineType(new EngineType(1));
         car.setGearboxType(new GearboxType(2));
         car.setPicture(new Picture(2));
-        this.advertStockDB.add(car);
+        this.advertCarDB.add(car);
         car.setPrice(2_000_000);
-        this.advertStockDB.update(car);
-        Car result = this.advertStockDB.getAll().get(1);
+        this.advertCarDB.update(car);
+        Car result = this.advertCarDB.getAll().get(1);
         assertThat(result.getPrice(), is(2_000_000));
-        this.advertStockDB.delete(car);
-        assertThat(this.advertStockDB.getAll().size(), is(0));
+        this.advertCarDB.delete(car);
+        assertThat(this.advertCarDB.getAll().size(), is(0));
     }
 }

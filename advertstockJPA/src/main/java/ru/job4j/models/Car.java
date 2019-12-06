@@ -21,7 +21,7 @@ public class Car {
     @Column
     private boolean onSale = true;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @ManyToOne

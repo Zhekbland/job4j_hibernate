@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+    <!--Init database controller-->
+    <servlet>
+        <servlet-name>InitDB</servlet-name>
+        <servlet-class>ru.job4j.presentation.InitDBController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InitDB</servlet-name>
+        <url-pattern>/init</url-pattern>
+    </servlet-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>default</servlet-name>-->
+<!--        <url-pattern>/resources/*</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+    <!--Filter-->
+    <filter>
+        <filter-name>Filter</filter-name>
+        <filter-class>ru.job4j.presentation.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!--Sign In controller-->
+    <servlet>
+        <servlet-name>SignIn</servlet-name>
+        <servlet-class>ru.job4j.presentation.SignInController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignIn</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+    <!--Adverts controller-->
+    <servlet>
+        <servlet-name>Adverts</servlet-name>
+        <servlet-class>ru.job4j.presentation.AdvertsController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Adverts</servlet-name>
+        <url-pattern>/adverts</url-pattern>
+    </servlet-mapping>
+
+    <!--Sign Out controller-->
+    <servlet>
+        <servlet-name>SignOut</servlet-name>
+        <servlet-class>ru.job4j.presentation.SignOutController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignOut</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+
+    <!--Create Advert controller-->
+    <servlet>
+        <servlet-name>CreateAdvert</servlet-name>
+        <servlet-class>ru.job4j.presentation.CreateAdvertController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateAdvert</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+
+    <!--My Adverts controller-->
+    <servlet>
+        <servlet-name>MyAdvert</servlet-name>
+        <servlet-class>ru.job4j.presentation.UsersAdvertController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyAdvert</servlet-name>
+        <url-pattern>/myadvert</url-pattern>
+    </servlet-mapping>
+
+    <!--CarMake controller-->
+    <servlet>
+        <servlet-name>CarMake</servlet-name>
+        <servlet-class>ru.job4j.presentation.carcontrollers.CarMakeController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CarMake</servlet-name>
+        <url-pattern>/carmake</url-pattern>
+    </servlet-mapping>
+
+    <!--Model controller-->
+    <servlet>
+        <servlet-name>Model</servlet-name>
+        <servlet-class>ru.job4j.presentation.carcontrollers.ModelController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Model</servlet-name>
+        <url-pattern>/model</url-pattern>
+    </servlet-mapping>
+
+    <!--BodyType controller-->
+    <servlet>
+        <servlet-name>BodyType</servlet-name>
+        <servlet-class>ru.job4j.presentation.carcontrollers.BodyTypeController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BodyType</servlet-name>
+        <url-pattern>/bodytype</url-pattern>
+    </servlet-mapping>
+
+    <!--EngineType controller-->
+    <servlet>
+        <servlet-name>EngineType</servlet-name>
+        <servlet-class>ru.job4j.presentation.carcontrollers.EngineTypeController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EngineType</servlet-name>
+        <url-pattern>/enginetype</url-pattern>
+    </servlet-mapping>
+
+    <!--GearboxType controller-->
+    <servlet>
+        <servlet-name>GearboxType</servlet-name>
+        <servlet-class>ru.job4j.presentation.carcontrollers.GearboxTypeController</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GearboxType</servlet-name>
+        <url-pattern>/gearboxtype</url-pattern>
+    </servlet-mapping>
+</web-app>

@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class AdvertStockDB implements IStock<Car> {
+public class AdvertCarDB implements IStock<Car> {
 
-    private static final AdvertStockDB INSTANCE = new AdvertStockDB();
+    private static final AdvertCarDB INSTANCE = new AdvertCarDB();
     private final SessionFactory sessionFactory;
 
-    public AdvertStockDB() {
+    public AdvertCarDB() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
@@ -25,7 +25,7 @@ public class AdvertStockDB implements IStock<Car> {
                 .buildSessionFactory();
     }
 
-    public static AdvertStockDB getInstance() {
+    public static AdvertCarDB getInstance() {
         return INSTANCE;
     }
 
@@ -60,13 +60,23 @@ public class AdvertStockDB implements IStock<Car> {
                 .collect(Collectors.toMap(Car::getId, car -> car)));
     }
 
+    @Override
+    public Car getById(int id) {
+        return this.tx(session -> session.get(Car.class, id));
+    }
+
+    @Override
+    public Car isCredentional(String param1, String param2) {
+        return null;
+    }
+
     public void fillCarModel() {
         CarMake carMake = new CarMake("Toyota");
         BodyType bodyType = new BodyType("sedan");
         EngineType engineType = new EngineType("3.6");
         GearboxType gearboxType = new GearboxType("Auto");
         Model model = new Model("Camry", new CarMake(1));
-        Picture picture = new Picture(new byte[1]);
+//        Picture picture = new Picture(new byte[1]);
         Session session = this.sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -75,7 +85,7 @@ public class AdvertStockDB implements IStock<Car> {
             session.save(bodyType);
             session.save(engineType);
             session.save(gearboxType);
-            session.save(picture);
+//            session.save(picture);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();

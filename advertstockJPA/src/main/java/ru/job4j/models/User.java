@@ -33,7 +33,7 @@ public class User {
     private String phone;
 
     @MapKey(name = "id")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     private Map<Long, Car> categories = new TreeMap<>();
 
     public User() {
@@ -42,6 +42,11 @@ public class User {
 
     public User(int id) {
         this.id = id;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public User(String name, String surname, String email, String password, String phone) {
@@ -130,7 +135,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", name='" + name + '\'' + ", surname='" + surname + '\''
-                + ", email='" + email + '\'' + ", password='" + password + '\'' + ", phone='" + phone + '\''
-                + ", categories=" + categories + '}';
+                + ", email='" + email + '\'' + ", password='" + password + '\'' + ", phone='" + phone + '\'';
+//                + ", categories=" + categories + '}';
     }
 }
