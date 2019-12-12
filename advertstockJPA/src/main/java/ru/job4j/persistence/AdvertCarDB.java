@@ -1,11 +1,7 @@
 package ru.job4j.persistence;
 
 import org.hibernate.*;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.models.Car;
-import ru.job4j.models.carmodels.*;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -14,15 +10,10 @@ import java.util.stream.Collectors;
 public class AdvertCarDB implements IStock<Car> {
 
     private static final AdvertCarDB INSTANCE = new AdvertCarDB();
-    private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory = DB.getInstance().getSessionFactory();
 
     public AdvertCarDB() {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
-        this.sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
+        super();
     }
 
     public static AdvertCarDB getInstance() {
@@ -68,30 +59,6 @@ public class AdvertCarDB implements IStock<Car> {
     @Override
     public Car isCredentional(String param1, String param2) {
         return null;
-    }
-
-    public void fillCarModel() {
-        CarMake carMake = new CarMake("Toyota");
-        BodyType bodyType = new BodyType("sedan");
-        EngineType engineType = new EngineType("3.6");
-        GearboxType gearboxType = new GearboxType("Auto");
-        Model model = new Model("Camry", new CarMake(1));
-//        Picture picture = new Picture(new byte[1]);
-        Session session = this.sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.save(carMake);
-            session.save(model);
-            session.save(bodyType);
-            session.save(engineType);
-            session.save(gearboxType);
-//            session.save(picture);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
     }
 
     /**

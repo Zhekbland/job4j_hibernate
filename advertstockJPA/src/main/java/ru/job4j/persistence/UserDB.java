@@ -7,9 +7,6 @@ import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import ru.job4j.models.User;
 
@@ -21,15 +18,9 @@ public class UserDB implements IStock<User> {
 
     private final static Logger LOG = LogManager.getLogger(UserDB.class.getName());
     private static final UserDB INSTANCE = new UserDB();
-    private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory = DB.getInstance().getSessionFactory();;
 
     public UserDB() {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
-        this.sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
     }
 
     public static UserDB getInstance() {

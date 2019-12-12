@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.models.Car;
 import ru.job4j.persistence.AdvertCarDB;
+import ru.job4j.persistence.IStock;
 
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 public class ValidateServiceAdvertCar implements Validate<Car> {
 
     private static final Logger LOG = LogManager.getLogger(ValidateServiceAdvertCar.class.getName());
-    private AdvertCarDB advertCarDB = AdvertCarDB.getInstance();
+    private final IStock<Car> advertCarDB = AdvertCarDB.getInstance();
     private static final ValidateServiceAdvertCar INSTANCE = new ValidateServiceAdvertCar();
 
     public static ValidateServiceAdvertCar getInstance() {

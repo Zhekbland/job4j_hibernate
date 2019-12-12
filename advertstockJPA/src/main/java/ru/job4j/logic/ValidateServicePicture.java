@@ -3,6 +3,7 @@ package ru.job4j.logic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.models.carmodels.Picture;
+import ru.job4j.persistence.IStock;
 import ru.job4j.persistence.PicturesDB;
 
 import java.util.Map;
@@ -16,11 +17,11 @@ import java.util.Map;
  */
 public class ValidateServicePicture implements Validate<Picture> {
 
-    private final PicturesDB picturesDB = PicturesDB.getInstance();
+    private final IStock<Picture> picturesDB = PicturesDB.getInstance();
     private static final ValidateServicePicture INSTANCE = new ValidateServicePicture();
     private static final Logger LOG = LogManager.getLogger(ValidateServicePicture.class.getName());
 
-    public static ValidateServicePicture getInstance() {
+    public static Validate getInstance() {
         return INSTANCE;
     }
 

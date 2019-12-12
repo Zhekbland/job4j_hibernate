@@ -1,28 +1,15 @@
 package ru.job4j.presentation;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateServiceAdvertCar;
 import ru.job4j.logic.ValidateServicePicture;
-import ru.job4j.logic.ValidateServiceUser;
 import ru.job4j.models.Car;
 import ru.job4j.models.User;
 import ru.job4j.models.carmodels.*;
-import ru.job4j.persistence.PartsCarDB;
-import ru.job4j.presentation.carcontrollers.ModelController;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -35,8 +22,8 @@ import java.io.*;
 @MultipartConfig
 public class CreateAdvertController extends HttpServlet {
 
-    private final ValidateServicePicture servicePicture = ValidateServicePicture.getInstance();
-    private final ValidateServiceAdvertCar serviceAdvertCar = ValidateServiceAdvertCar.getInstance();
+    private final Validate<Picture> servicePicture = ValidateServicePicture.getInstance();
+    private final Validate<Car> serviceAdvertCar = ValidateServiceAdvertCar.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(CreateAdvertController.class.getName());
 
     @Override

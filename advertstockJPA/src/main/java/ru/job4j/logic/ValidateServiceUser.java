@@ -3,6 +3,7 @@ package ru.job4j.logic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.models.User;
+import ru.job4j.persistence.IStock;
 import ru.job4j.persistence.UserDB;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class ValidateServiceUser implements Validate<User> {
 
     private static final ValidateServiceUser INSTANCE = new ValidateServiceUser();
     private static final Logger LOG = LogManager.getLogger(ValidateServiceUser.class.getName());
-    private UserDB userDB = UserDB.getInstance();
+    private final IStock<User> userDB = UserDB.getInstance();
 
 
     public static ValidateServiceUser getInstance() {

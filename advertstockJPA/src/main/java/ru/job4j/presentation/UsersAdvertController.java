@@ -2,6 +2,7 @@ package ru.job4j.presentation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateServiceAdvertCar;
 import ru.job4j.models.Car;
 
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class UsersAdvertController extends HttpServlet {
 
-    private final ValidateServiceAdvertCar validateServiceAdvertCar = ValidateServiceAdvertCar.getInstance();
+    private final Validate<Car> validateServiceAdvertCar = ValidateServiceAdvertCar.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

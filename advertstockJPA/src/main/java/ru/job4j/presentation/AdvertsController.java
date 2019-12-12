@@ -2,8 +2,11 @@ package ru.job4j.presentation;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateServiceAdvertCar;
 import ru.job4j.logic.ValidateServiceUser;
+import ru.job4j.models.Car;
+import ru.job4j.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +16,8 @@ import java.io.IOException;
 
 public class AdvertsController extends HttpServlet {
 
-    private final ValidateServiceAdvertCar serviceCar = ValidateServiceAdvertCar.getInstance();
-    private final ValidateServiceUser serviceUser = ValidateServiceUser.getInstance();
+    private final Validate<Car> serviceCar = ValidateServiceAdvertCar.getInstance();
+    private final Validate<User> serviceUser = ValidateServiceUser.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(AdvertsController.class.getName());
 
     @Override

@@ -3,9 +3,6 @@ package ru.job4j.persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import ru.job4j.models.carmodels.*;
 
@@ -16,15 +13,9 @@ import java.util.stream.Collectors;
 public class PartsCarDB {
 
     private static final PartsCarDB INSTANCE = new PartsCarDB();
-    private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory = DB.getInstance().getSessionFactory();;
 
     public PartsCarDB() {
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
-        this.sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
     }
 
     public static PartsCarDB getInstance() {

@@ -1,5 +1,6 @@
 package ru.job4j.presentation;
 
+import ru.job4j.logic.Validate;
 import ru.job4j.logic.ValidateServiceUser;
 import ru.job4j.models.User;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public class SignInController extends HttpServlet {
 
-    private ValidateServiceUser validateServiceUser = ValidateServiceUser.getInstance();
+    private Validate<User> validateServiceUser = ValidateServiceUser.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
