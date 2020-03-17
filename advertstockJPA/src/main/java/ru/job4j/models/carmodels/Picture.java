@@ -16,6 +16,7 @@ public class Picture {
     @Column(nullable = false, unique = true)
     private String fileName;
 
+    @Lob()
     private byte[] image;
 
     public Picture() {
@@ -25,6 +26,11 @@ public class Picture {
         this.filePath = filePath;
         this.fileName = fileName;
         this.image = image;
+    }
+
+    public Picture(String filePath, String fileName) {
+        this.filePath = filePath;
+        this.fileName = fileName;
     }
 
     public Picture(int id) {

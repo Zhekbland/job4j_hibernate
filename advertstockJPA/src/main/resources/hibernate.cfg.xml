@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/advertstockjpa</property>
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.username">postgres</property>
-        <property name="connection.password">password</property>
-        <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+<!--        <property name="connection.url">jdbc:postgresql://localhost:5432/advertstockjpa</property>-->
+<!--        <property name="connection.driver_class">org.postgresql.Driver</property>-->
+<!--        <property name="connection.username">postgres</property>-->
+<!--        <property name="connection.password">password</property>-->
+<!--        <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>-->
+<!--        <property name="hibernate.hbm2ddl.auto">create-drop</property>-->
+<!--        <property name="show_sql">true</property>-->
+
+        <property name="connection.url">jdbc:mysql://88.99.94.73/zhekb953_advertstock?serverTimezone=UTC</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">zhekb953_jpa</property>
+        <property name="connection.password">3Q0z6W5j</property>
+        <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
         <property name="show_sql">true</property>
 

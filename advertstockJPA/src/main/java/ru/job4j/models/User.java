@@ -33,7 +33,7 @@ public class User {
     private String phone;
 
     @MapKey(name = "id")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Map<Long, Car> categories = new TreeMap<>();
 
     public User() {

@@ -65,7 +65,7 @@
 
         function getMark() {
             $.ajax({
-                url: 'http://localhost:8080/store/carmake',
+                url: '${pageContext.servletContext.contextPath}/carmake',
                 method: 'post',
                 dataType: 'text/json',
                 complete: function (data) {
@@ -82,7 +82,7 @@
             $('#model').removeAttr('disabled');
             disabledSelects();
             $.ajax({
-                url: 'http://localhost:8080/store/model',
+                url: '${pageContext.servletContext.contextPath}/model',
                 method: 'post',
                 dataType: 'json',
                 data: JSON.stringify($('#mark option:selected').val()),
@@ -100,7 +100,7 @@
             $('#bodytype').empty();
             $('#bodytype').removeAttr('disabled');
             $.ajax({
-                url: 'http://localhost:8080/store/bodytype',
+                url: '${pageContext.servletContext.contextPath}/bodytype',
                 method: 'post',
                 dataType: 'text/json',
                 complete: function (data) {
@@ -117,7 +117,7 @@
             $('#enginetype').empty();
             $('#enginetype').removeAttr('disabled');
             $.ajax({
-                url: 'http://localhost:8080/store/enginetype',
+                url: '${pageContext.servletContext.contextPath}/enginetype',
                 method: 'post',
                 dataType: 'text/json',
                 complete: function (data) {
@@ -134,7 +134,7 @@
             $('#gearboxtype').empty();
             $('#gearboxtype').removeAttr('disabled');
             $.ajax({
-                url: 'http://localhost:8080/store/gearboxtype',
+                url: '${pageContext.servletContext.contextPath}/gearboxtype',
                 method: 'post',
                 dataType: 'text/json',
                 complete: function (data) {

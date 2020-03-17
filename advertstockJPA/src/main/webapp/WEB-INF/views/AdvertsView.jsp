@@ -22,7 +22,7 @@
     <script>
         function getAdverts() {
             $.ajax({
-                url: 'http://localhost:8080/store/adverts',
+                url: '${pageContext.servletContext.contextPath}/adverts',
                 method: 'POST',
                 dataType: 'JSON',
                 complete: function (data) {

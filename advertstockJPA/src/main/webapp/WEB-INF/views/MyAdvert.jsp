@@ -23,7 +23,7 @@
         function setSaleStatus(carId) {
             if (confirm("Are you sure?")) {
                 $.ajax({
-                    url: 'http://localhost:8080/store/myadvert',
+                    url: '${pageContext.servletContext.contextPath}/myadvert',
                     method: 'POST',
                     dataType: 'JSON',
                     data: JSON.stringify({
@@ -34,7 +34,7 @@
                     }
                 });
             } else {
-                window.location.href = 'http://localhost:8080/store/myadvert';
+                window.location.href = '${pageContext.servletContext.contextPath}/myadvert';
             }
         }
     </script>

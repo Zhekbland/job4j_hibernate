@@ -1,7 +1,5 @@
 package ru.job4j.models.carmodels;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "carmakes")
 public class CarMake {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -16,6 +15,7 @@ public class CarMake {
     private String name;
 
     @OneToMany
+    @JoinColumn(name = "carmake_id")
     private List<Model> model;
 
     public CarMake() {
