@@ -18,7 +18,7 @@
 
 ### 1) [Площадка продажи авто. AdvertStock](https://github.com/Zhekbland/job4j_hibernate/tree/master/advertstockJPA/src/main)
 ### [AdvertStock on Heroku](https://zhekbland-hibernate.herokuapp.com)
-### [AdvertStock on AWS](http://advertstock.eu-west-2.elasticbeanstalk.com/)
+### [AdvertStock on AWS](http://advertstock.eu-west-2.elasticbeanstalk.com/) (EC2 stopped)
 Для тестирования: 
 
 Email: max@gmail.com Password: 3214
